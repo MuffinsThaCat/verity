@@ -4,6 +4,7 @@
  * writes an MP4.
  *
  *   npm run record                       # -> recordings/verity-demo-<time>.mp4
+ *   npm run record:short                 # about two minutes: fits X's 140 seconds for a free account
  *   PACE=1.4 npm run record              # slower captions
  *   SHOW=1 npm run record                # also open the finished video
  *
@@ -26,7 +27,12 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const CHROME = process.env.CHROME ?? "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const W = Number(process.env.WIDTH ?? 1400), H = Number(process.env.HEIGHT ?? 900);
-const PACE = process.env.PACE ?? "1.2";
+// SHORT=1 is for a video that must fit X's 140 seconds for a free account (about two minutes): tighter captions, tighter story
+// narration, and agents that react sooner. PACE, SPD and AGENT_INTERVAL_MS still override it.
+const SHORT = process.env.SHORT === "1";
+const PACE = process.env.PACE ?? (SHORT ? "0.7" : "1.2");
+const SPD = process.env.SPD ?? (SHORT ? "0.45" : "1");
+const AGENT_MS = process.env.AGENT_INTERVAL_MS ?? (SHORT ? "2500" : "5000");
 const SETTLE = Number(process.env.SETTLE_S ?? 45);
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const say = (m) => console.log(`[record] ${m}`);
@@ -71,7 +77,7 @@ process.on("exit", () => { cleanup(); tidy(); });
 say(`starting a fresh demo on port ${PORT} ...`);
 demo = spawn("node", ["dist/scripts/../scripts/demo.js", "--offline"], {
   cwd: root, stdio: ["ignore", "pipe", "pipe"],
-  env: { ...process.env, PORT: String(PORT), DOTENV_CONFIG_PATH: "/dev/null", AGENT_INTERVAL_MS: process.env.AGENT_INTERVAL_MS ?? "5000" },
+  env: { ...process.env, PORT: String(PORT), DOTENV_CONFIG_PATH: "/dev/null", AGENT_INTERVAL_MS: AGENT_MS },
 });
 let log = "";
 demo.stdout.on("data", (d) => { log += d; });
@@ -120,7 +126,7 @@ await send("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceSc
 // 3. record while the autopilot plays
 await send("Page.startScreencast", { format: "jpeg", quality: 82, everyNthFrame: 1 });
 say("recording ...");
-await send("Page.navigate", { url: `${URL_}/?autopilot=1&pace=${PACE}` });
+await send("Page.navigate", { url: `${URL_}/?autopilot=1&pace=${PACE}&spd=${SPD}` });
 
 let captions = 0, last = "", finished = false;
 const deadline = Date.now() + 20 * 60 * 1000;

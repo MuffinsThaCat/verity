@@ -32,7 +32,10 @@ const ago = (ms) => {
 const clock = (ms) => new Date(ms).toTimeString().slice(0, 8);
 const safeHref = (u) => (/^https?:\/\//i.test(u) ? u : null);
 const shq = (s) => String(s).replace(/'/g, "'\\''");
-const sleepMs = (ms) => new Promise((r) => setTimeout(r, ms));
+const waitMs = (ms) => new Promise((r) => setTimeout(r, ms));
+// A pause in a story's narration. The autopilot sets window.verityPace (below 1 shortens the pauses, for a short recording);
+// it never touches the waits that follow the chain, only how long a caption is left on screen.
+const sleepMs = (ms) => waitMs(ms * (window.verityPace ?? 1));
 const articleOf = (t) => String(t).split("/")[0];
 const titleCase = (slug) => slug.split(/[-_:]+/).filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(" ");
 const signed = (n, d = 2) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(d)}`;
@@ -78,7 +81,7 @@ async function demoPost(path, body) {
     try { return await post(path, body); }
     catch (e) {
       if (attempt >= 4 || !/slow down|another demo action/.test(e.message)) throw e;
-      await sleepMs(3200);
+      await waitMs(3200); // the server's own pause between demo actions: real time, never scaled
     }
   }
 }
@@ -828,7 +831,7 @@ async function waitFor(pred, ms, tick = 250) {
     if (story.stop) throw STOP;
     const v = pred();
     if (v) return v;
-    await sleepMs(tick);
+    await waitMs(tick);
   }
   return null;
 }

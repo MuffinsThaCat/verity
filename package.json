@@ -22,6 +22,7 @@
     "measure:scan": "node dist/scripts/measure-scan-gas.js",
     "test:ui": "node test/ui/ui-check.mjs",
     "record": "node scripts/record-demo.mjs",
+    "record:short": "SHORT=1 node scripts/record-demo.mjs",
     "measure:calls": "node dist/scripts/measure-call-gas.js",
     "measure:topics": "node dist/scripts/measure-topics-gas.js",
     "fetch-node": "node dist/scripts/fetch-node.js",

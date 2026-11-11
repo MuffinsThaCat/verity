@@ -8,7 +8,10 @@
 // Esc stops it. It needs the demo controls (they add the sentences), so it does nothing on a read-only deployment.
 
 const params = new URLSearchParams(location.search);
-const PACE = Math.max(0.5, Number(params.get("pace") ?? 1) || 1);
+const PACE = Math.max(0.3, Number(params.get("pace") ?? 1) || 1);
+// `spd` shortens everything the story itself pauses on, and the cursor's travel, for a recording that must be short (X lets a free
+// account post 140 seconds). It never shortens a wait on the chain or the agents: those take as long as they take.
+const SPD = Math.max(0.3, Math.min(1.5, Number(params.get("spd") ?? 1) || 1));
 const $ = (s) => document.querySelector(s);
 const STOP = Symbol("stop");
 const BAR = 136; // height of the strip for words, in px; the same number is --apBar in the stylesheet below
@@ -85,12 +88,12 @@ function spot(el, ms = 3000) {
 
 async function moveTo(el) {
   el.scrollIntoView({ behavior: "smooth", block: "center" });
-  await sleep(800);
+  await sleep(800 * Math.min(1, SPD));
   const r = el.getBoundingClientRect();
   cursor.classList.add("on");
   // The strip at the bottom is not part of the page: keep the cursor above it.
   place(Math.min(innerWidth - 20, Math.max(20, r.left + Math.min(r.width / 2, 120))), Math.min(innerHeight - BAR - 20, Math.max(20, r.top + r.height / 2)));
-  await sleep(1000);
+  await sleep(1000 * Math.min(1, SPD));
 }
 
 async function click(el) {
@@ -190,10 +193,12 @@ export async function start() {
   running = true; stopped = false;
   $("#apStart")?.setAttribute("hidden", "");
   document.documentElement.classList.add("ap");
+  window.verityPace = SPD;
   try { await tour(); }
   catch (e) { if (e !== STOP) { say(`Autopilot stopped: ${e instanceof Error ? e.message : String(e)}`); console.error(e); await new Promise((r) => setTimeout(r, 6000)); hush(); } }
   finally {
     running = false;
+    delete window.verityPace;
     document.documentElement.classList.remove("ap");
     cursor.classList.remove("on");
     hush();
