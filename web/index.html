@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Verity: the encyclopedia that prices its own claims</title>
+  <meta name="description" content="Every sentence is a perpetual belief market on NEAR. AI agents earn by correcting what is wrong, and the article rewrites itself from the prices.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231d4ed8'/%3E%3Cpath d='M8 9l8 15 8-15' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <script>
+  // The page's own URLs are relative, so the address must end in "/" (https://host/verity would look for /api/config).
+  if (!location.pathname.endsWith("/") && !/\.[a-z0-9]+$/i.test(location.pathname)) location.replace(location.pathname + "/" + location.search + location.hash);
+</script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the article</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="./" aria-label="Verity home">
+      <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--accent)"/><path d="M8 9l8 15 8-15" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="wordmark">Verity</span>
+      <span class="tag">every sentence has a price</span>
+    </a>
+    <div class="pills">
+      <span class="pill" id="pill-net" title="Network">…</span>
+      <span class="pill" id="pill-judge" title="Who judges the evidence">…</span>
+      <span class="pill live" id="pill-live" title="Connection to the chain"><i></i><span>connecting</span></span>
+    </div>
+    <button id="wallet" class="ghost" hidden>Connect wallet</button>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Articles"></nav>
+</header>
+
+<main id="main" class="layout" tabindex="-1">
+  <article class="paper" id="paper" role="tabpanel" aria-live="off">
+    <aside class="infobox" id="infobox" aria-label="At a glance" hidden></aside>
+    <p class="kicker" id="kicker"></p>
+    <h1 id="title">Loading…</h1>
+    <p class="statusline" id="status"></p>
+
+    <section id="lede" class="lede" aria-label="Summary written from the market"></section>
+    <div class="byline" id="byline"></div>
+
+    <nav class="toc" id="toc" aria-label="Contents" hidden></nav>
+
+    <div class="legend" aria-label="How to read the prices">
+      <span><b>Price</b> = the market's probability the sentence is true.</span>
+      <span class="swatches" id="legend"></span>
+    </div>
+
+    <section id="body" class="body" aria-label="Article body"></section>
+
+    <section id="rejectedWrap" class="rejected" hidden>
+      <h2>Rejected by the market</h2>
+      <p class="muted">These claims were once on the page. The market priced them below 30%, so they left the article. They stay on record with the evidence that removed them.</p>
+      <ul id="rejected"></ul>
+    </section>
+
+    <section id="refsWrap" class="refs" hidden>
+      <div class="refs-head">
+        <h2 id="references">References</h2>
+        <button class="ghost small" id="verifyAll">Verify every source</button>
+      </div>
+      <p class="muted">Each source is a pinned page and the sha256 of its content, posted on chain with a bond. <b>Verify</b> fetches it again, here in your browser, and compares.</p>
+      <ol id="refs" class="reflist"></ol>
+    </section>
+  </article>
+
+  <aside class="panel" id="panel" aria-label="Market for the selected sentence">
+    <div class="panel-empty">
+      <h2>Click any sentence</h2>
+      <p>You will see the market behind it: its price history, the sources agents have attached (with the exact quote and a content hash you can check), who is trading, and the contradictions it is part of.</p>
+    </div>
+  </aside>
+</main>
+
+<section class="lower">
+  <div class="card wide" id="swarmCard" hidden>
+    <div class="card-head">
+      <h2>The swarm</h2>
+      <span class="muted" id="swarmTotals"></span>
+    </div>
+    <p class="muted">Autonomous agents, each with its own NEAR account and its own money. <b>Researchers</b> find sources for claims nobody has checked and back what they find. <b>Skeptics</b> audit the claims the market is surest of. The <b>arbiter</b> trades contradictions between claims. Nobody tells them what is true.</p>
+    <div class="swarm" id="swarm"></div>
+  </div>
+
+  <div class="card wide" id="demoCard" hidden>
+    <h2>Add to the encyclopedia</h2>
+    <p class="muted">You control a funded account. Anyone can add a sentence. Add a true one and watch the agents check it against a source, or lie to the encyclopedia and watch them correct it. <span id="demoWho"></span></p>
+    <h3 class="demo-sub">Add a true sentence</h3>
+    <div class="liepick addpick">
+      <label for="addSel">Pick a sentence to add</label>
+      <select id="addSel"></select>
+      <button class="btn primary" id="addGo">Add this sentence</button>
+      <button class="btn story" id="playAdd">▶ Play: add a sentence</button>
+      <span class="msg" id="addMsg" role="status"></span>
+    </div>
+    <details class="custom">
+      <summary>Or write your own sentence</summary>
+      <form id="addForm">
+        <label>Sentence <input id="addText" type="text" maxlength="280" value="Charon was discovered in 1978."></label>
+        <div class="row">
+          <label>It belongs to <select id="addArticle"></select></label>
+        </div>
+        <button type="submit" id="addBtn" class="btn primary">Add the sentence</button>
+        <span class="msg" id="addFormMsg" role="status"></span>
+      </form>
+    </details>
+    <h3 class="demo-sub">Lie to the encyclopedia</h3>
+    <div class="liepick">
+      <label for="lieSel">Pick a lie</label>
+      <select id="lieSel"></select>
+      <button class="btn primary" id="lieGo">Inject this lie</button>
+      <button class="btn story" id="playStory">▶ Play the story</button>
+      <span class="msg" id="lieMsg" role="status"></span>
+    </div>
+    <details class="custom">
+      <summary>Or write your own lie</summary>
+      <form id="injectForm">
+        <label>False claim <input id="injText" type="text" maxlength="280" value="Pluto has twelve known natural satellites."></label>
+        <div class="row">
+          <label>It belongs to <select id="injArticle"></select></label>
+          <label>It contradicts <select id="injContra"><option value="">nothing in particular</option></select></label>
+          <label>Seed (NEAR) <input id="injSeed" type="number" min="0.5" max="5" step="0.5" value="2"></label>
+          <label>Pump (NEAR) <input id="injPump" type="number" min="0" max="5" step="0.5" value="2"></label>
+        </div>
+        <button type="submit" id="injBtn" class="btn primary">Inject the lie</button>
+        <span class="msg" id="injMsg" role="status"></span>
+      </form>
+    </details>
+    <div class="ledger" id="ledger"></div>
+  </div>
+
+  <div class="card">
+    <h2>Revision history</h2>
+    <p class="muted">The article is rewritten whenever any sentence changes band. Nobody edits it.</p>
+    <ol id="revs" class="revs"></ol>
+  </div>
+
+  <div class="card">
+    <h2>Contradictions</h2>
+    <p class="muted">Links between claims are markets too, even between articles. When two claims that cannot both be true are priced as if they were, the gap shows here and the arbiter trades it.</p>
+    <ul id="viol" class="viol"></ul>
+  </div>
+
+  <div class="card wide">
+    <h2>Agent activity</h2>
+    <p class="muted">Everything the agents do, as it happens. Every trade is a transaction on the contract.</p>
+    <ul id="feed" class="feed"></ul>
+  </div>
+</section>
+
+<footer class="foot">
+  <details>
+    <summary>How it works, and what it does not prove</summary>
+    <div class="cols">
+      <div>
+        <h3>How it works</h3>
+        <ol>
+          <li>Each claim is a binary market with a fixed-product AMM. It never resolves: the price is the crowd's current confidence.</li>
+          <li>Agents attach sources (a pinned URL and the sha256 of its content) and trade on them. A judge's quote must appear verbatim in the source or the verdict is thrown out.</li>
+          <li>Evidence carries a bond that is returned only if capital follows it. Spam costs money.</li>
+          <li>Relations between claims are markets, so contradictions are priced and tradeable.</li>
+          <li>The page is generated from the prices. Claims below 30% leave the body.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Honest limits</h3>
+        <ul>
+          <li>No oracle means no guaranteed arbitrage: a contradiction trade is a bet that prices converge.</li>
+          <li>Price tracks what capital believes. Truth enters through the cost of being wrong against agents that can check cheaply.</li>
+          <li>A thin market is cheap to move. Pool depth is the security budget.</li>
+          <li>A judge can be wrong or be fed a bad source. Its stake is capped and its quote is checkable. The rule-based judge cannot read meaning: it declines to trade rather than guess.</li>
+        </ul>
+      </div>
+    </div>
+  </details>
+  <p class="muted" id="footline"></p>
+</footer>
+
+<div class="stage" id="stage" hidden role="status" aria-live="polite">
+  <ol class="steps" id="stageSteps"></ol>
+  <p class="stage-text" id="stageText"></p>
+  <button class="ghost" id="stageStop">Close</button>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script type="module" src="app.js"></script>
+<script type="module" src="autopilot.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "topic": "mount-everest",
+  "claims": [
+    {
+      "key": "highest",
+      "text": "Mount Everest is Earth's highest mountain above sea level."
+    },
+    {
+      "key": "border",
+      "section": "geography",
+      "text": "Mount Everest lies on the border between Nepal and China."
+    },
+    {
+      "key": "himalaya",
+      "section": "geography",
+      "text": "Mount Everest is part of the Himalayas."
+    },
+    {
+      "key": "height",
+      "section": "geography",
+      "text": "The official height of Mount Everest is 8,848.86 metres."
+    },
+    {
+      "key": "ascent",
+      "section": "history",
+      "text": "Tenzing Norgay and Edmund Hillary made the first documented ascent of Everest in 1953."
+    }
+  ],
+  "links": [],
+  "lies": [
+    {
+      "text": "Tenzing Norgay and Edmund Hillary made the first documented ascent of Everest in 1963.",
+      "section": "history",
+      "contradicts": [
+        "ascent"
+      ],
+      "note": "It was 1953."
+    }
+  ],
+  "adds": [
+    {
+      "text": "Mount Everest is known as Sagarmatha in Nepal.",
+      "section": "geography",
+      "note": "True."
+    }
+  ]
+}

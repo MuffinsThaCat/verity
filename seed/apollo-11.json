@@ -1,0 +1,53 @@
+{
+  "topic": "apollo-11",
+  "claims": [
+    {
+      "key": "landed",
+      "text": "Apollo 11 landed on the Moon on 20 July 1969."
+    },
+    {
+      "key": "launch",
+      "section": "mission",
+      "text": "Apollo 11 launched on 16 July 1969."
+    },
+    {
+      "key": "armstrong",
+      "section": "crew",
+      "text": "Neil Armstrong was the first person to walk on the Moon."
+    },
+    {
+      "key": "aldrin",
+      "section": "crew",
+      "text": "Buzz Aldrin was the second person to walk on the Moon."
+    },
+    {
+      "key": "collins",
+      "section": "crew",
+      "text": "Michael Collins remained in lunar orbit while Armstrong and Aldrin landed."
+    }
+  ],
+  "links": [],
+  "lies": [
+    {
+      "text": "Apollo 11 landed on the Moon on 20 July 1972.",
+      "contradicts": [
+        "landed"
+      ],
+      "note": "It was 1969."
+    },
+    {
+      "text": "Neil Armstrong was the second person to walk on the Moon.",
+      "section": "crew",
+      "contradicts": [
+        "armstrong"
+      ],
+      "note": "Armstrong stepped out first."
+    }
+  ],
+  "adds": [
+    {
+      "text": "Apollo 11 was the fifth crewed mission of NASA's Apollo program.",
+      "note": "True."
+    }
+  ]
+}

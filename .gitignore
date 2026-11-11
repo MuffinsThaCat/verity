@@ -1,0 +1,16 @@
+node_modules/
+dist/
+data/
+.env
+.env.generated
+.sandbox-bin/
+contracts/verity/target/
+*.log
+.env.server
+.env.agents
+.env.admin
+.env.*.local
+recordings/
+.DS_Store
+*.tmp
+*.tmp.mjs

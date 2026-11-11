@@ -1,0 +1,22 @@
+{
+  "topic": "pluto",
+  "claims": [
+    { "key": "dwarf", "text": "Pluto is a dwarf planet in the Kuiper belt." },
+    { "key": "found", "section": "discovery", "text": "Pluto was discovered in 1930 by Clyde Tombaugh." },
+    { "key": "iau", "section": "discovery", "text": "The International Astronomical Union reclassified Pluto as a dwarf planet in 2006." },
+    { "key": "five", "section": "moons", "text": "Pluto has five known natural satellites." },
+    { "key": "charon", "section": "moons", "text": "Charon is the largest moon of Pluto." },
+    { "key": "period", "section": "orbit", "text": "Pluto's orbital period is about 248 years." },
+    { "key": "flyby", "section": "orbit", "text": "Pluto was visited by the New Horizons spacecraft in 2015." }
+  ],
+  "links": [
+    { "a": "iau", "b": "solar-system#eight", "rel": "Implies", "prior_bps": 9000 }
+  ],
+  "lies": [
+    { "text": "Pluto has twelve known natural satellites.", "section": "moons", "contradicts": ["five"], "note": "Wikipedia says five." },
+    { "text": "Pluto was discovered in 1950 by Clyde Tombaugh.", "section": "discovery", "contradicts": ["found"], "note": "Wikipedia says 1930." }
+  ],
+  "adds": [
+    { "text": "Charon was discovered in 1978.", "section": "moons", "note": "True: James Christy, 1978." }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "topic": "solar-system",
+  "claims": [
+    { "key": "eight", "text": "The Solar System has eight planets." },
+    { "key": "jupiter", "section": "planets", "text": "Jupiter is the largest planet in the Solar System." },
+    { "key": "saturn", "section": "planets", "text": "Saturn is the second largest planet in the Solar System." },
+    { "key": "mercury", "section": "planets", "text": "Mercury is the closest planet to the Sun." },
+    { "key": "earth", "section": "planets", "text": "Earth is the third planet from the Sun." },
+    { "key": "age", "section": "origin", "text": "The Solar System formed about 4.6 billion years ago." }
+  ],
+  "links": [],
+  "lies": [
+    { "text": "The Solar System has nine planets.", "contradicts": ["eight", "pluto#iau"], "note": "Pluto stopped counting in 2006." }
+  ],
+  "adds": [
+    { "text": "Mars is the fourth planet from the Sun.", "section": "planets", "note": "True." }
+  ]
+}

@@ -1,0 +1,6 @@
+# NEAR's VM only accepts conservative WASM. Newer rustc emits bulk-memory and reference-types by default,
+# so the contract is pinned to a toolchain (1.86, the newest NEAR documents) that does not.
+[toolchain]
+channel = "1.86.0"
+targets = ["wasm32-unknown-unknown"]
+profile = "minimal"

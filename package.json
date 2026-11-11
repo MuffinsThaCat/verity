@@ -1,0 +1,45 @@
+{
+  "name": "verity",
+  "version": "1.0.0",
+  "description": "Verity: an encyclopedia where every claim is a perpetual belief market and AI agents are the fact-checkers.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test \"dist/test/*.test.js\"",
+    "build:contract": "bash contracts/verity/build.sh",
+    "test:contract": "cd contracts/verity && cargo test",
+    "e2e": "node dist/test/e2e/e2e.js",
+    "server": "node dist/src/server.js",
+    "agents": "node dist/src/agents/run.js",
+    "demo": "node dist/scripts/demo.js",
+    "bootstrap": "node dist/scripts/bootstrap.js",
+    "seed": "node dist/scripts/seed.js",
+    "verify-evidence": "node dist/scripts/verify-evidence.js",
+    "warm": "node dist/scripts/warm.js",
+    "demo:offline": "node dist/scripts/demo.js --offline",
+    "measure:scan": "node dist/scripts/measure-scan-gas.js",
+    "test:ui": "node test/ui/ui-check.mjs",
+    "record": "node scripts/record-demo.mjs",
+    "measure:calls": "node dist/scripts/measure-call-gas.js",
+    "measure:topics": "node dist/scripts/measure-topics-gas.js",
+    "fetch-node": "node dist/scripts/fetch-node.js",
+    "check-code": "node dist/scripts/check-code.js",
+    "split-env": "node dist/scripts/split-env.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "near-api-js": "^7.4.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "near-sandbox": "^0.2.1",
+    "typescript": "^5.6.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
