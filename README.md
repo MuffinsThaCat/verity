@@ -16,6 +16,7 @@ Needs Node 20 or newer. License: MIT for the code (`LICENSE`); the cached Wikipe
 `npm run fetch-node` does that ahead of time. `npm run test:ui` needs Chrome (set `CHROME` to its path if it is not the macOS default).
 
 ```bash
+git clone https://github.com/MuffinsThaCat/verity && cd verity
 npm install
 npm run build
 npm run warm          # optional: the pages the demo reads ship in seed-cache/; this refreshes or extends them (see below)

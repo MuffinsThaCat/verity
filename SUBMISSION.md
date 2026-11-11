@@ -1,6 +1,6 @@
 # Submission kit
 
-Deadline: **14 Nov 2026, 23:59 UTC.** The form needs a public GitHub repo, a public X post with a demo video or screenshots,
+Deadline: **14 Nov 2026, 23:59 UTC.** Repo: https://github.com/MuffinsThaCat/verity (public). The form needs a public GitHub repo, a public X post with a demo video or screenshots,
 the project name, team lead contact, team size, a NEAR wallet address for prizes, a 20-2,000 character description, and tracks.
 
 ## Tracks to select
@@ -29,7 +29,7 @@ Rust contract (integer-only AMM, fully collateralised, public solvency view), Ty
 >
 > Watch me lie to it. And check the sources yourself: your browser re-hashes the Wikipedia page. [video]
 >
-> repo: <link>  #NEARHackathon
+> repo: https://github.com/MuffinsThaCat/verity  #NEARHackathon
 
 ## 90-second video script
 1. (0:00) Pluto article. "Every sentence has a price: the market's probability that it is true." Point at the references and the contents box. Click a sentence, show the evidence, the quote, the hash.
@@ -53,4 +53,5 @@ Tip for recording: on a good network run `npm run fetch-node` (the 53 MB local N
 - [ ] Before recording, on a good network: `npm run fetch-node` (see the tip above), so the take does not wait on a download
 - [ ] Have the NEAR wallet address for prizes ready; the form asks for it
 - [ ] If you have a model key, run once with it and say so in the video; otherwise say "rule-based judge" (the header already does)
-- [ ] Make the repo public, post on X, submit the form
+- [x] The repo is public: https://github.com/MuffinsThaCat/verity
+- [ ] Post on X (with the video from `npm run record`), submit the form
