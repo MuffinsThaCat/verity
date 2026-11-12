@@ -8,29 +8,29 @@ AI Swarms (agents as the market makers and fact-checkers), Agent Economy (agents
 wrong; the demo runs on a local sandbox, so that NEAR has no outside value), Open Innovation. Not Social Money: that track is
 built on Sputnik DAO and Trezu, which Verity does not use.
 
-## Description (1,966 characters; the form allows 20 to 2,000)
+## Description (1,944 characters; the form allows 20 to 2,000)
 
-Verity is an encyclopedia where every sentence is a perpetual prediction market on NEAR, and the page is written from the prices.
+Verity is an encyclopedia where every sentence is a non-resolving prediction market on NEAR, and the page is written from the prices.
 
-LLMs hallucinate because being wrong costs nothing. Wikipedia decays because being right pays nothing. Verity prices both. A claim is a binary market that never resolves, so there is no oracle to trust: the price is the crowd's current confidence. Articles have sections, numbered references and citations, and are regenerated from the prices; a claim that falls below 30% leaves the page with the evidence that removed it.
+A non-resolving market has no end date and no judge that declares a winner, so there is no oracle to trust: the price is simply the crowd's current confidence, and anyone can sell back to the pool at any time. Prediction markets are built for events that will resolve; this one is for facts, which never do.
 
-A swarm of agents does the work, each with its own NEAR account and its own money. Researchers find sources for unchecked claims, skeptics audit the claims the market is surest of, and an arbiter trades contradictions, because "A implies B" and "A excludes B" are markets too, even across articles. An agent reads a pinned Wikipedia revision, its judge must quote the page word for word (enforced in code, not in the prompt), and the source goes on chain as bonded evidence: URL plus sha256.
+LLMs hallucinate because being wrong costs nothing. Wikipedia decays because being right pays nothing. Verity prices both. Articles have sections, numbered references and citations, and are regenerated from the prices; a claim that falls below 30% leaves the page with the evidence that removed it.
 
-Check everything: every source has a Verify button; your browser re-fetches the Wikipedia revision, hashes it, confirms the page, and finds the agent's quote in it.
+A swarm of agents does the work, each with its own NEAR account and its own money. Researchers find sources for unchecked claims, skeptics audit the claims the market is surest of, and an arbiter trades contradictions, because "A implies B" and "A excludes B" are markets too. An agent reads a pinned Wikipedia revision, its judge must quote the page word for word (enforced in code), and the source goes on chain as bonded evidence: URL plus sha256. Every source has a Verify button: your browser re-fetches the revision, hashes it, and finds the quote.
 
-The demo has two halves. Add a sentence: a true one enters at 50% with nobody having checked it; an agent reads Wikipedia, quotes it, posts the evidence on chain, and the price climbs to about 80%. Lie to it: a false one enters at 94%, backed by 2 NEAR; the agents refute it with a checkable quote, drive it below 15%, the article rewrites itself, your browser verifies the source, and the liar loses about 5 NEAR.
+The demo: add a true sentence and watch an agent confirm it (50% to about 80%), or inject a lie backed by 2 NEAR and watch the agents refute it below 15%, the article rewrite itself, and the liar lose about 5 NEAR.
 
-Rust contract (integer-only AMM, fully collateralised, public solvency view), TypeScript agents; runs with no API key (rule-based judge on real Wikipedia). Deployed on NEAR testnet (verity1-contract.verity-admin.testnet); the full demo also runs on a local sandbox. A language-model judge is built in but untested against a real model.
+Rust contract (integer-only AMM, fully collateralised, public solvency view), TypeScript agents, no API key needed (rule-based judge on real Wikipedia). Deployed on NEAR testnet (verity1-contract.verity-admin.testnet); the full demo runs on a local sandbox. A language-model judge is built in but untested against a real model. Sister project: $TRUE (github.com/MuffinsThaCat/true-mine), which builds a token on the same market.
 
 ## X post (draft)
 
-> I built Verity at NEAR HACKATHON: an encyclopedia that prices its own sentences.
+> I built Verity at NEAR HACKATHON: an encyclopedia where every sentence has a price.
 >
-> Every claim is a perpetual prediction market on @NEARProtocol. No oracle, no resolution. A swarm of AI agents with their own wallets gets paid for finding what's wrong, and the article rewrites itself from the prices.
+> Each claim is a non-resolving market on @NEARProtocol. AI agents check Wikipedia, quote it word for word, and your browser re-hashes every source.
 >
-> Watch me lie to it. And check the sources yourself: your browser re-hashes the Wikipedia page. [video]
+> https://github.com/MuffinsThaCat/verity #NEARHackathon
 >
-> repo: https://github.com/MuffinsThaCat/verity  #NEARHackathon
+> (271 characters as X counts them: it counts the link as 23. Attach the video from `npm run record:short`.)
 
 ## 90-second video script
 1. (0:00) Pluto article. "Every sentence has a price: the market's probability that it is true." Point at the references and the contents box. Click a sentence, show the evidence, the quote, the hash.
